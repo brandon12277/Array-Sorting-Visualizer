@@ -34,9 +34,6 @@ div.className = 'row';
 div.id="set"+i;
 arr.push(Math.floor(Math.floor(Math.random()*(maxelem-minelem+1)+minelem)));
 div.style.height=arr[i]+"px";
-if(arrsize>=100){div.style.backgroundColor="yellowgreen";}
-if(arrsize>170){div.style.backgroundColor="violet";}
-if(arrsize>=200){div.style.backgroundColor="darkcyan";}
 document.getElementById('content').appendChild(div);
 }
 }     
