@@ -1,10 +1,11 @@
-var arr=[],array = [],sort=false,length=0;
+var arr=[],array = [],sort=false,length=0,pause=false;
 //function to delete array row
-framerate=()=>{if(arr.length<=55)return 50;
-               else if(arr.length<=20)return 100;
-               else if(arr.length<=100)return 13;
-               else if(arr.length<=160)return 3;
-               else if(arr.length>=180)return 0.01;
+framerate=()=>{
+    if(arr.length<=20)return 300;
+               else if(arr.length<=50)return 200;
+               else if(arr.length<=100)return 60;
+               else if(arr.length<=160)return 50;
+               else if(arr.length>=180)return 50;
     }
 function deleterow()
 {
@@ -13,9 +14,16 @@ function deleterow()
    myNode.removeChild(myNode.lastChild);
 }
 }
+
+
+
 //function to add the randomized array
 var slider = document.getElementById("myRange");
 
+
+
+document.getElementById("pause").addEventListener("click",()=>{pause=true});
+document.getElementById("play").addEventListener("click",()=>{pause=false});
 
 function addRow() {
 var slider = document.getElementById("myRange");
@@ -43,6 +51,7 @@ function ascendsort(arr)
 {
 if(sort==true)//to check if array is sorted or not
 return;
+pause=false;
 var id=null;var j=0,i=0;sort=true;
 clearInterval(id);
 var maxelem=300;
@@ -50,6 +59,8 @@ var frames=framerate();
 id=setInterval(frame,frames);
 return null;
 function frame(){
+    if(pause==true);
+    else{
     if(sort==false){clearInterval(id);return;}//to check if array is sorted or not
     document.getElementById("set"+j).style.backgroundColor="red";
     if(i===(arr.length)-1){document.getElementById("set"+0).style.backgroundColor="red";var time1=performance.now();document.getElementById("arraysize").innerHTML="ARRAY SORTING TOOK "+(time1-time0)+" Ms";clearInterval(id);}   
@@ -76,6 +87,7 @@ function frame(){
     j++;
 }
 }
+}
 
 
  
@@ -84,12 +96,15 @@ function selectionsort()
 {
 if(sort==true)//to check if array is sorted or not
 return;
+pause=false;
 var id=null;var i=0,min=i,j=i+1;sort=true;
 clearInterval(id);
 var frames=framerate();
 id=setInterval(frame,frames);
 return null;
 function frame(){
+    if(pause==true);
+    else{
     if(sort==false){clearInterval(id);return;}//to check if array is sorted or not
     document.getElementById("set"+i).style.backgroundColor="red";
     document.getElementById("set"+j).style.backgroundColor="red";
@@ -117,9 +132,11 @@ function frame(){
     j++;
 }
 }
+}
 function shellSort() {
     if(sort==true)//to check if array is sorted or not
     return;
+    pause=false;
     var N = arr.length,id=null;sort=true;
     var h =1,i=h,j=i;
     while (h<Math.floor(N/3)) h=(3*h)+1; // 1, 4, 13, 40, 121, 364, 1093, ...
@@ -127,10 +144,14 @@ function shellSort() {
     id=setInterval(frame,frames);
     return null;
     function frame(){
+        if(pause==true);
+        else{
         if(sort==false){clearInterval(id);return;}//to check if array is sorted or not
         if(h>=1){
             if(i<N){
+               
                 if(j>=h && arr[j]>arr[j-h]){
+                    
                 document.getElementById("set"+j).style.backgroundColor="red";
                 document.getElementById("set"+(j-h)).style.backgroundColor="red";
                 let temp=arr[j];
@@ -147,7 +168,58 @@ function shellSort() {
         }
         else{document.getElementById("set"+(arr.length-1)).style.backgroundColor="red";clearInterval(id);}
     }
+   }
     //bug in shell sort certain elements not sorting using for loop in meantime until bug clarified
     
+    }
+    function insertionSort() {
+        if(sort==true)//to check if array is sorted or not
+        return;
+        pause=false;
+        var N = arr.length,id=null;sort=true;
+        var i=1,j=i; var value=arr[i];
+        frames=framerate();
+        id=setInterval(frame,frames);
+
+        function frame(){
+            if(pause==true);
+            else{
+            if(sort==false){clearInterval(id);return;}
+           
+            if(i===(arr.length)){document.getElementById("set"+0).style.backgroundColor="red";var time1=performance.now();clearInterval(id);} 
+            else{
+                document.getElementById("set"+j).style.backgroundColor="orange";
+                if(j>0 && arr[j-1]>value){
+                    
+                    arr[j]=arr[j-1];
+                    document.getElementById("set"+j).style.backgroundColor="red"
+                    document.getElementById("set"+(j-1)).style.backgroundColor="red"
+                    document.getElementById("set"+j).style.height=document.getElementById("set"+(j-1)).style.height;
+                    j--;
+                }
+                else{
+                   
+                   
+                    arr[j]=value;
+                    document.getElementById("set"+j).style.height=value;
+                    document.getElementById("set"+j).style.backgroundColor="red"
+                    
+                    i++;
+                    j=i;
+                    value=arr[i];
+                    
+                }
+                
+            }
+           
+           
+            
+           
+
+
+
+        }
+     }
+
     }
     

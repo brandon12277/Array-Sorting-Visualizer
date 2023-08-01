@@ -6,6 +6,19 @@
     width:100%;
     overflow: hidden;
 }
+#pause,#play{
+    transform:scale(1.5);
+    padding:0.5%;
+   
+    border:1px solid burlywood;
+    transition: 1s;
+}
+#pause:hover{
+    transform:scale(1.8);
+}
+#play:hover{
+    transform:scale(1.8);
+}
 .footer{
      position:absolute;
      bottom:0;
@@ -97,6 +110,7 @@
     }
     .slider{
       width:30%;
+      cursor: pointer;
       
     }
     @media only screen and (max-width: 900px){
@@ -197,10 +211,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
     <head>
         <link rel="stylesheet" href="styleshee.css">
-        <script src="script.js"></script>
+       
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;1,200&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body onload="sort=true;addRow()">
         <div class="navbar">
@@ -209,6 +224,7 @@
             <button class="button-style bubblesort" onclick="ascendsort(arr)">BUBBLE SORT</button>
             <button class="button-style selectionsort" onclick="selectionsort()">SELECTION SORT</button>
             <button class="button-style shellsort" onclick="shellSort()">SHELL SORT</button>
+            <button class="button-style mergesort" onclick="insertionSort()">INSERTION SORT</button>
             <button class="button-style randomizer"  onclick="sort=true;addRow()">GENERATE RANDOM ARRAY</button>
         </div>
         </div>
@@ -216,6 +232,11 @@
             
         </div>
         <div class="slidecontainer">
+            <div style="display:flex;gap:5%;width:100%;justify-content: center;">
+                <button id="pause" style="outline:none;background:none;cursor: pointer;color:burlywood;"><i class="fa-solid fa-pause"></i></button>
+                <button id="play" style="outline:none;background:none;cursor : pointer;color:burlywood;"><i class="fa-solid fa-play"></i></button>
+            </div>
+            
             <h2>ARRAY SIZE GENERATOR</h2>
             <input type="range" min="10" max="220"  class="slider" id="myRange" oninput="sort=true;addRow()">
           </div>
@@ -223,4 +244,5 @@
             <p>Powered By @Brandon Luke Williams</p>
         </footer>
     </body>
+    <script src="script.js"></script>
 </html>
