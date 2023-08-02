@@ -117,7 +117,7 @@ function frame(){
         if(j>0 && i!=(arr.length)-2){
                 document.getElementById("set"+(j-1)).style.backgroundColor="orange";
          }
-         if(arr[j]>arr[min])min=j;
+         if(arr[j]<arr[min])min=j;
          if(j===arr.length-1){
             document.getElementById("set"+j).style.backgroundColor="orange";
             let temp=arr[i];
@@ -149,9 +149,10 @@ function shellSort() {
         if(sort==false){clearInterval(id);return;}//to check if array is sorted or not
         if(h>=1){
             if(i<N){
-               
+                if(document.getElementById("set"+i).style.backgroundColor!='red')
+                  document.getElementById("set"+i).style.backgroundColor="orange";
                 if(j>=h && arr[j]>arr[j-h]){
-                    
+                   
                 document.getElementById("set"+j).style.backgroundColor="red";
                 document.getElementById("set"+(j-h)).style.backgroundColor="red";
                 let temp=arr[j];
@@ -162,7 +163,7 @@ function shellSort() {
                 document.getElementById("set"+(j-h)).style.height=any;
                 j-=h;
                 }
-                else{i++;j=i;}
+                else{ i++;j=i;}
             }
             else{h=Math.floor(h/3);i=h;j=i;}
         }
@@ -189,7 +190,7 @@ function shellSort() {
             if(i===(arr.length)){document.getElementById("set"+0).style.backgroundColor="red";var time1=performance.now();clearInterval(id);} 
             else{
                 document.getElementById("set"+j).style.backgroundColor="orange";
-                if(j>0 && arr[j-1]>value){
+                if(j>0 && arr[j-1]<value){
                     
                     arr[j]=arr[j-1];
                     document.getElementById("set"+j).style.backgroundColor="red"
