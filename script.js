@@ -1,4 +1,6 @@
 var arr=[],array = [],sort=false,length=0,pause=false;
+
+
 //function to delete array row
 framerate=()=>{
     if(arr.length<=20)return 300;
@@ -15,6 +17,9 @@ function deleterow()
 }
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+ }
 
 
 //function to add the randomized array
@@ -68,6 +73,7 @@ function frame(){
         
         if(j>0){
                 document.getElementById("set"+(j-1)).style.backgroundColor="orange";
+               
          }
          if(j===(arr.length-i-1)){j=0;i++;}
          
@@ -97,12 +103,14 @@ function selectionsort()
 if(sort==true)//to check if array is sorted or not
 return;
 pause=false;
+var color=['pink','orange']
 var id=null;var i=0,min=i,j=i+1;sort=true;
+var it_count=0;
 clearInterval(id);
 var frames=framerate();
 id=setInterval(frame,frames);
 return null;
-function frame(){
+async function frame(){
     if(pause==true);
     else{
     if(sort==false){clearInterval(id);return;}//to check if array is sorted or not
@@ -115,11 +123,16 @@ function frame(){
     else{
         
         if(j>0 && i!=(arr.length)-2){
-                document.getElementById("set"+(j-1)).style.backgroundColor="orange";
+            
+                if(it_count%2==0)document.getElementById("set"+(j-1)).style.backgroundColor=color[1];
+                else
+                document.getElementById("set"+(j-1)).style.backgroundColor=color[0];
+                
          }
          if(arr[j]<arr[min])min=j;
          if(j===arr.length-1){
             document.getElementById("set"+j).style.backgroundColor="orange";
+            
             let temp=arr[i];
             arr[i]=arr[min];
             arr[min]=temp;
@@ -127,6 +140,7 @@ function frame(){
             document.getElementById("set"+i).style.height=document.getElementById("set"+min).style.height;
             document.getElementById("set"+min).style.height=any;
             j=i+1;i++,min=i;
+            it_count++;
         }
     }
     j++;
@@ -143,14 +157,16 @@ function shellSort() {
     frames=framerate();
     id=setInterval(frame,frames);
     return null;
-    function frame(){
+    async function frame(){
         if(pause==true);
         else{
         if(sort==false){clearInterval(id);return;}//to check if array is sorted or not
         if(h>=1){
             if(i<N){
-                if(document.getElementById("set"+i).style.backgroundColor!='red')
-                  document.getElementById("set"+i).style.backgroundColor="orange";
+                if(document.getElementById("set"+i).style.backgroundColor!='red'){ document.getElementById("set"+i).style.backgroundColor="orange";
+                await sleep(500);}
+                  
+
                 if(j>=h && arr[j]>arr[j-h]){
                    
                 document.getElementById("set"+j).style.backgroundColor="red";
@@ -182,7 +198,7 @@ function shellSort() {
         frames=framerate();
         id=setInterval(frame,frames);
 
-        function frame(){
+         function frame(){
             if(pause==true);
             else{
             if(sort==false){clearInterval(id);return;}
@@ -190,6 +206,7 @@ function shellSort() {
             if(i===(arr.length)){document.getElementById("set"+0).style.backgroundColor="red";var time1=performance.now();clearInterval(id);} 
             else{
                 document.getElementById("set"+j).style.backgroundColor="orange";
+               
                 if(j>0 && arr[j-1]<value){
                     
                     arr[j]=arr[j-1];
@@ -222,5 +239,108 @@ function shellSort() {
         }
      }
 
+    }
+
+
+
+    
+
+function quickSort()
+ 
+    {
+        var low=0;
+        var high=arr.length-1;
+        let stack = new Array(high - low + 1);
+        stack.fill(0);
+   
+        // initialize top of stack
+        let top = -1;
+   
+        // push initial values of l and h to
+        // stack
+        stack[++top] = low;
+        stack[++top] = high;
+   
+        // Keep popping from stack while
+        // is not empty
+        console.log(top);
+        var id,pivot,i,j,p=0,partition_end=false,partition_start=true;
+       
+        var id=setInterval(()=>{
+            if(top<0)clearInterval(id);
+              else{
+                console.log("in 1")
+                if(partition_start===true){
+                    console.log("in 2")
+                high = stack[top--];
+                low = stack[top--];
+                j=low;
+                pivot=arr[high];
+                i=low-1;
+                partition_start=false;
+                }
+
+                if(partition_end===true){
+                    console.log("bye")
+                    p=i+1;
+                   
+                    
+                    if (p - 1 > low) {
+                        stack[++top] = low;
+                        stack[++top] = p - 1;
+                    }
+           
+                    // If there are elements on
+                    // right side of pivot, then
+                    // push right side to stack
+                    if (p + 1 < high) {
+                        stack[++top] = p + 1;
+                        stack[++top] = high;
+                    }
+                    partition_end=false;
+                    partition_start=true;
+                    j=low;
+                    pivot=arr[high];
+                    i=low-1;
+                    
+                  }
+
+                if(j>=high){
+                    console.log("in 4")
+                    partition_end=true;
+                    var temp=arr[i];
+                    var temp2=document.getElementById("set"+(i+1)).height;
+                    document.getElementById("set"+(i+1)).height=document.getElementById("set"+high).height
+                    arr[i+1]=arr[high];
+                    document.getElementById("set"+high).height=temp2;
+                    arr[high]=temp;                 
+                    document.getElementById("set"+(i+1)).style.backgroundColor="red"
+                    document.getElementById("set"+high).style.backgroundColor="red"
+               }
+                else{
+                   
+                   if(arr[j]<=pivot){
+                    console.log("in 3")
+                          i++;
+                          var temp=arr[i];
+                          var temp2=document.getElementById("set"+i).height;
+                          document.getElementById("set"+i).height=document.getElementById("set"+j).height
+                          arr[i]=arr[j];
+                          document.getElementById("set"+j).height=temp2;
+                          arr[j]=temp;
+                          document.getElementById("set"+i).style.backgroundColor="red"
+                          document.getElementById("set"+j).style.backgroundColor="red"
+                          
+                   }
+                   j++;
+                }
+                
+
+               
+                }
+
+               
+        },100)
+       
     }
     
